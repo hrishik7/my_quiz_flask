@@ -1,0 +1,67 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='play.css')}}">
+{% endblock %}
+
+{% block content %}
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Play Here</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="main">
+    <div class="inactive-form" id="signup-container">
+        <h2 class="title">Questions</h2>
+    
+	<form  class="quiz-form" method="post" , action = "{{ url_for('score') }}">
+		{% for key in data %}
+      <p>{{ key['question'] }}</p>
+      <input class = 'option' type="radio" id="{{ key['correct_answer'] }}_{{ loop.index0 }}" name="selected_{{ loop.index0 }}" value="{{ key['correct_answer'] }}" checked>
+		  <label for="{{ key['correct_answer'] }}_{{ loop.index0 }}">{{ key['correct_answer'] }}</label>
+
+		  <input class = 'option' type="radio" id="{{ key['incorrect_answers'][0] }}_{{ loop.index0 }}" name="selected_{{ loop.index0 }}" value="{{ key['incorrect_answers'][0] }}" >
+		  <label for="{{ key['incorrect_answers'][0] }}_{{ loop.index0 }}">{{ key['incorrect_answers'][0] }}</label>
+
+		  {% if key['incorrect_answers']|length >= 2 %}
+        <input class = 'option' type="radio" id="{{ key['incorrect_answers'][1] }}_{{ loop.index0 }}" name="selected_{{ loop.index0 }}" value="{{ key['incorrect_answers'][1] }}" >
+		    <label for="{{ key['incorrect_answers'][1] }}_{{ loop.index0 }}">{{ key['incorrect_answers'][1] }}</label>
+      {% endif %}
+
+      {% if key['incorrect_answers']|length >= 3 %}
+        <input class = 'option' type="radio" id="{{ key['incorrect_answers'][2] }}_{{ loop.index0 }}" name="selected_{{ loop.index0 }}" value="{{ key['incorrect_answers'][2] }}" >
+		    <label for="{{ key['incorrect_answers'][2] }}_{{ loop.index0 }}">{{ key['incorrect_answers'][2] }}</label>
+      {% endif %}  
+
+		{% endfor %}
+    <br>
+	  <button type=submit name = "sumit_button">Submit</button>
+	</form>
+	</div>
+</div>
+
+  
+{% endblock %}
+
+
+
+
+

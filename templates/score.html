@@ -1,0 +1,15 @@
+<h1> your score is {{scr}} </h1>
+
+<h2> Leaderboard </h2>
+
+{% block content %}
+{% for item in data %}
+<tr>
+    <td>{{item[1]}}</td>
+    <td>{{item[2]}}</td>
+    <br>
+    <br>
+    <br>
+</tr>
+{% endfor %}
+{% endblock %}
